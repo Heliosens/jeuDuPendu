@@ -14,28 +14,27 @@ let wordArray = [
     "LANGAGE",
 ];
 
-let letterBtn = document.getElementById('letter').getElementsByTagName('a');
+let letterBtn = document.getElementsByClassName('letter');
 let word = document.getElementById('word');
 let ltrWord = document.getElementById("word").getElementsByTagName("div");
 let wrongLetter = document.getElementById('wrongLetter');
-let goOn = document.getElementById("goOn");
 
 // beginning
+
 // shake array
 shakeArray();
-// create div on word
+
+// create div with first word
 hollowWord(wordArray[0]);
-console.log(wordArray[0]);
+// console.log(wordArray[0]);
 let game = 0;
+
+let count = 0;
 
 for (let l = 0 ; l < letterBtn.length ; l++){
     letterBtn[l].addEventListener('click', function (event){
         event.preventDefault();
 
-        goOn.addEventListener('click', function (event){
-            event.preventDefault();
-            game++;
-        })
         // recup word
         let theWord = wordArray[game];
 
@@ -56,8 +55,6 @@ for (let l = 0 ; l < letterBtn.length ; l++){
             wrongLetter.appendChild(wrongLtr);
         }
 
-        // if letter write it in place or on used letter
-        // count test
     })
 }
 
@@ -74,9 +71,7 @@ function shakeArray (){
 function hollowWord (theWord){
     for(let char of theWord){
         let box = document.createElement('div');
-        box.style.borderBottom = "3px solid black";
-        box.style.height = '5vh';
-        box.style.width = '2.5vw';
+
         word.appendChild(box);
     }
 }
