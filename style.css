@@ -68,24 +68,26 @@ a {
 #display {
     height: 100%;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 
 #word div {
     width: 3vw;
-    height: 4vh;
+    height: 5vh;
     margin: .5rem;
+    font-size: 3vw;
     border-bottom: black 3px solid;
 }
 
 #hangMan {
-    width: 50%;
+    position: relative;
+    width: 45%;
     background-color: teal;
     background-image: url("img/pendu-10.png");
     background-size: contain;
     background-repeat: no-repeat;
-    padding-bottom: 50%;
+    padding-bottom: 45%;
 }
 
 #usedLetter {
@@ -98,7 +100,7 @@ a {
 }
 
 #btn {
-    width: 80%;
+    width: 90%;
     justify-content: space-evenly;
 }
 
