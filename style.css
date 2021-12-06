@@ -14,7 +14,7 @@ body {
     font-size: 2vw;
 }
 
-section, #side, #game, #display, #word {
+section, #side, #game, #display, #word, #usedLetter {
     display: flex;
 }
 
@@ -39,12 +39,16 @@ p {
     flex-wrap: wrap;
 }
 
+a {
+    text-decoration-line: none;
+}
+
 #letter a {
     font-size: 2.5vw;
     width: 30%;
     padding: 1vh 0;
     margin: .25rem;
-    text-decoration-line: none;
+
 }
 
 #letter a:hover {
@@ -82,5 +86,17 @@ p {
 
 #usedLetter {
     flex-basis: 15%;
+    flex-direction: column;
+}
+
+#usedLetter div {
+    flex-basis: 70%;
+}
+
+#goOn {
+    background-color: teal;
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: 15px;
 }
 
