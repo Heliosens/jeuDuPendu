@@ -17,6 +17,7 @@ let wordArray = [
 let letterBtn = document.getElementById('letter').getElementsByTagName('a');
 let word = document.getElementById('word');
 let ltrWord = document.getElementById("word").getElementsByTagName("div");
+let wrongLetter = document.getElementById('wrongLetter');
 let goOn = document.getElementById("goOn");
 
 // beginning
@@ -26,9 +27,15 @@ shakeArray();
 hollowWord(wordArray[0]);
 console.log(wordArray[0]);
 let game = 0;
+
 for (let l = 0 ; l < letterBtn.length ; l++){
     letterBtn[l].addEventListener('click', function (event){
         event.preventDefault();
+
+        goOn.addEventListener('click', function (event){
+            event.preventDefault();
+            game++;
+        })
         // recup word
         let theWord = wordArray[game];
 
@@ -36,15 +43,19 @@ for (let l = 0 ; l < letterBtn.length ; l++){
         let ltr = this.innerHTML;
 
         // search in word (as array)
-        for(let c = 0 ; c < theWord.length ; c++){
-            if( ltr === theWord[c]){
-                ltrWord[c].innerHTML = ltr;
-            }
-            else {
-                let wrongLtr = document.createElement('div');
-
+        if(theWord.includes(ltr)){
+            for(let c = 0 ; c < theWord.length ; c++){
+                if( ltr === theWord[c]){
+                    ltrWord[c].innerHTML = ltr;
+                }
             }
         }
+        else {
+            let wrongLtr = document.createElement('div');
+            wrongLtr.innerHTML = ltr;
+            wrongLetter.appendChild(wrongLtr);
+        }
+
         // if letter write it in place or on used letter
         // count test
     })
@@ -70,7 +81,4 @@ function hollowWord (theWord){
     }
 }
 
-goOn.addEventListener('click', function (event){
-    event.preventDefault();
-    game++;
-})
+

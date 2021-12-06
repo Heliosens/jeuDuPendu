@@ -14,6 +14,10 @@ body {
     font-size: 2vw;
 }
 
+main {
+    padding: 1rem;
+}
+
 section, #side, #game, #display, #word, #usedLetter {
     display: flex;
 }
@@ -54,7 +58,7 @@ a {
 #letter a:hover {
     font-weight: bold;
     background-color: darkgrey;
-    color: white;
+    color: black;
 }
 
 #game, #display {
@@ -93,10 +97,11 @@ a {
     flex-basis: 70%;
 }
 
-#goOn {
+#goOn, #raz {
     background-color: teal;
     color: white;
     padding: .5rem 1rem;
     border-radius: 15px;
+    margin: .5rem 0;
 }
 
