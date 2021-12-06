@@ -11,49 +11,48 @@ html {
 
 body {
     width: 100%;
+    font-size: 1.5vw;
 }
 
-section, #game {
+section, #side, #game {
     display: flex;
 }
 
 section {
     border: 1px dashed black;
-
 }
 
 #side {
-    flex-basis: 10%;
+    flex-basis: 15%;
+    flex-direction: column;
     text-align: center;
+    border: 1px black solid;
 }
 
 #side div {
     display: flex;
-    flex-direction: column;
 }
 
 #letter {
+    width: 100%;
     display: flex;
-    justify-content: start;
     flex-wrap: wrap;
-    background-color: #77889980;
 }
 
-#letter span {
-    font-size: 1vw;
-    border: black dashed 1px;
-    width: 33%;
+#letter a {
+    font-size: 2vw;
+    width: 30%;
     padding: 1vh 0;
+    margin: .25rem;
+    text-decoration-line: none;
+}
+
+#letter a:hover {
+    font-weight: bold;
+    background-color: darkgrey;
+    color: white;
 }
 
 #game {
-    flex-basis: 90%;
-    width: 100%;
+    flex-basis: 85%;
 }
-
-#hangMan {
-    width: 80%;
-    padding-bottom: 50%;
-    background-color: green;
-}
-
