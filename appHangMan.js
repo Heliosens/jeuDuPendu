@@ -13,9 +13,11 @@ let wordArray = [
     "DEVELOPPEUR",
     "LANGAGE",
 ];
+
 // get start button
 let startBtn = document.querySelector('#startBtn');
-
+// get btn next word
+let nextWord = document.getElementById('nextWord');
 // get letter
 let letterBtn = document.getElementsByClassName('letter');
 let word = document.getElementById('word');
@@ -28,26 +30,26 @@ frame.style.backgroundImage = 'url("img/pendu-10.png")';
 
 // get display chance
 let chance = document.getElementById('display').querySelector('span');
-
+// shake words
+shakeArray();
 let w = 0;
+let wordNbr = 0;
 // beginning
 startBtn.addEventListener('click', function (event){
     event.preventDefault();
 
     frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
 
-    // restart
-    let game = 0;
+    // start
     for(let item of letterBtn){
         item.style.visibility = "visible";
     }
-    // start
-    startBtn.parentElement.style.display = 'none';
-    // shake words
-    shakeArray();
 
-    if(game < wordArray.length){    // from first to the end of word
-        let theWord = wordArray[game];
+    startBtn.parentElement.style.display = 'none';
+
+    let count = 0;
+    if(wordNbr < wordArray.length){    // from first to last word
+        let theWord = wordArray[wordNbr];
         console.log(theWord)
         // create div with this word
         hollowWord(theWord);
@@ -66,7 +68,15 @@ startBtn.addEventListener('click', function (event){
                         if( ltr === theWord[c]){
                             ltrWord[c].innerHTML = ltr;
                             ltrWord[c].style.border = 'none';
+                            count++;
+                            console.log("mot = " + theWord.length + " count = " + count);
                         }
+                    }
+
+                    if(count === theWord.length){
+                        chance.innerHTML = "Gagné !!!"
+                        wordNbr++;
+                        // continue
                     }
                 }
                 else {
@@ -86,6 +96,9 @@ startBtn.addEventListener('click', function (event){
                 }
             })
         }
+    }
+    else {
+        chance.innerHTML = "Félicitation, vous avez trouvé tous les mots !";
     }
 })
 
@@ -108,3 +121,8 @@ function hollowWord (theWord){
     }
 }
 
+function inGame (wordNbr){     // if start button or next word param word's number
+    // afficher les lettres
+    // afficher le mot suivant
+    // remettre w = 0
+}
