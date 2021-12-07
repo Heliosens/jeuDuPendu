@@ -12,6 +12,21 @@ let wordArray = [
     "ARTISTE",
     "DEVELOPPEUR",
     "LANGAGE",
+    "ALIGATOR",
+    "GATEAU",
+    "ORANGE",
+    "ECHARPE",
+    "ORDINATEUR",
+    "CAHIER",
+    "SPATULE",
+    "PARAPLUIE",
+    "CHAUSURE",
+    "MUSIQUE",
+    "GIRAFE",
+    "KOALA",
+    "NATATION",
+    "ARCHERIE",
+    "ANIMATION",
 ];
 
 // get start button
@@ -31,7 +46,7 @@ let frame = document.querySelector('#hangMan');
 frame.style.backgroundImage = 'url("img/pendu-10.png")';
 
 // get display chance
-let chance = document.getElementById('display').querySelector('span');
+let info = document.getElementById('btn').getElementsByTagName('span');
 
 // state beginning
 let wordNbr = 0; // word's index
@@ -43,10 +58,12 @@ let win = 0; // word found
 for(let btn of startBtn){
     btn.addEventListener('click', function (event) {
         event.preventDefault();
-        // 0 for reset, 1 for continue
+        // 0 for reset
         startGame(0);
+
         let theWord = wordArray[wordNbr];
         console.log(theWord)
+
         // from first to last word, si pas gané, si pas perdu
         if(wordNbr < wordArray.length && count < theWord.length && w < 10){
             // create div with this word
@@ -61,19 +78,23 @@ for(let btn of startBtn){
                     letterBtn[l].style.visibility = 'hidden';
 
                     // search letter in word (as array)
-                    if(theWord.includes(ltr)){
+                    if(theWord.includes(ltr) && count < theWord.length){
                         for(let c = 0 ; c < theWord.length ; c++){
                             if( ltr === theWord[c]){
                                 ltrWord[c].innerHTML = ltr;
                                 ltrWord[c].style.border = 'none';
                                 count++;
+                                console.log(count);
                             }
                         }
                         if(count === theWord.length){
-                            chance.innerHTML = "Gagné !!!"
                             wordNbr++;
                             win++;
+                            info[0].style.visibility = "hidden";
+                            info[1].innerHTML = "Vous avez trouvé " + win + " mots"
                             // continue
+                            startBtn[1].style.display = "none";
+                            startBtn[2].style.display = "block";
                         }
                     }
                     else {
@@ -83,11 +104,11 @@ for(let btn of startBtn){
                         w++;
                         if(w < 10){
                             frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                            chance.innerHTML = (parseInt(chance.innerHTML) - 1) + " chances";
+                            info[0].innerHTML = (parseInt(info[0].innerHTML) - 1) + " chances";
                         }
                         else{
                             frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                            chance.innerHTML = "Vous avez perdu";
+                            info[0].innerHTML = "Vous avez perdu";
                             startBtn.parentElement.style.display = "flex";
                         }
                     }
@@ -95,7 +116,7 @@ for(let btn of startBtn){
             }
         }
         else if(wordNbr === wordArray.length){
-            chance.innerHTML = "Félicitation, vous avez trouvé " + win + " sur " + wordArray.length;
+            info[2].innerHTML = "Félicitation, vous avez trouvé " + win + " sur " + wordArray.length;
         }
         else {
             console.log(count === theWord.length ? "mot trouvé" : "perdu");
@@ -103,6 +124,8 @@ for(let btn of startBtn){
         }
     })
 }
+
+
 // function
 function startGame(param){
     // restart or continue
@@ -112,12 +135,16 @@ function startGame(param){
         wordNbr = 0;
     }
     else{
+        // next word
         wordNbr++;
     }
 
     // no hang man
     frame.style.backgroundImage = 'url("img/pendu-0.png")';
 
+    // reset chance
+    info[0].innerHTML = "10 chances";
+    info[0].style.visibility = "hidden";
     // reset visibility
     for(let item of letterBtn){
         item.style.visibility = "visible";
@@ -125,9 +152,13 @@ function startGame(param){
 
     // hide start btn
     startBtn[0].parentElement.style.display = 'none';
-    // reset wrong
+    // reset wrong div
     wrongLetter.innerHTML = "";
-    count = w = win = 0;  // good & wrong letter & word found
+
+    // reset good & wrong letter & word found
+    count = 0;
+    w = 0;
+    win = 0;
 }
 
 function shakeArray (){

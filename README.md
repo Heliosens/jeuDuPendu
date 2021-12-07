@@ -27,9 +27,9 @@ si ( wordNbr < au nbr total && count < taille du mot && w < 10 chances) :
     
     l'utilisateur choisi une lettre
         - la lettre est présente dans le mot :
-        - elle s'incrit à sa/ses place(s)
+            - elle s'incrit à sa/ses place(s)
             count++ * nombre de places
-        - elle s'inscrit dans wrong
+            - sinon elle s'inscrit dans wrong
             w++
     sinon si (wordNbr === nbr total) :
 
