@@ -16,9 +16,11 @@ let wordArray = [
 
 // get start button
 let startBtn = document.querySelector('#startBtn');
-// get btn next word
+
+// get next word button
 let nextWord = document.getElementById('nextWord');
-// get letter
+
+// get all letters, target of the word, each letter of the word, target of wrong letter
 let letterBtn = document.getElementsByClassName('letter');
 let word = document.getElementById('word');
 let ltrWord = document.getElementById("word").getElementsByTagName("div");
@@ -30,80 +32,98 @@ frame.style.backgroundImage = 'url("img/pendu-10.png")';
 
 // get display chance
 let chance = document.getElementById('display').querySelector('span');
-// shake words
-shakeArray();
-let w = 0;
-let wordNbr = 0;
+
+// state beginning
+let w = 0; // wrong choice
+let wordNbr = 0; // found words
+let count = 0;  // good letter
+
 // beginning
-startBtn.addEventListener('click', function (event){
+startBtn.addEventListener('click', function (event) {
     event.preventDefault();
+    // 0 for start
+    startGame(0);
+})
 
-    frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+if(wordNbr < wordArray.length){    // from first to last word
+    let theWord = wordArray[wordNbr];
+    console.log(theWord)
+    // create div with this word
+    hollowWord(theWord);
+    // listen letters
+    for (let l = 0 ; l < letterBtn.length ; l++){
+        letterBtn[l].addEventListener('click', function (event) {
+            event.preventDefault();
+            // get the letter
+            let ltr = letterBtn[l].innerHTML;
 
-    // start
+            letterBtn[l].style.visibility = 'hidden';
+
+            // search letter in word (as array)
+            if(theWord.includes(ltr)){
+                for(let c = 0 ; c < theWord.length ; c++){
+                    if( ltr === theWord[c]){
+                        ltrWord[c].innerHTML = ltr;
+                        ltrWord[c].style.border = 'none';
+                        count++;
+                        console.log("mot = " + theWord.length + " count = " + count);
+                    }
+                }
+
+                if(count === theWord.length){
+                    chance.innerHTML = "Gagné !!!"
+                    wordNbr++;
+                    // continue
+                }
+            }
+            else {
+                let wrongLtr = document.createElement('div');
+                wrongLtr.innerHTML = ltr;
+                wrongLetter.appendChild(wrongLtr);
+                w++;
+                if(w < 10){
+                    frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                    chance.innerHTML = (parseInt(chance.innerHTML) - 1) + " chances";
+                }
+                else{
+                    frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                    chance.innerHTML = "Vous avez perdu";
+                    startBtn.parentElement.style.display = "flex";
+                }
+            }
+        })
+    }
+}
+else {
+    chance.innerHTML = "Félicitation, vous avez trouvé tous les mots !";
+}
+
+
+
+// function
+function startGame(param){
+    if(param === 0){
+        // shake words
+        shakeArray();
+        wordNbr = 0;
+    }
+    else{
+        wordNbr++;
+    }
+
+    // no hang man
+    frame.style.backgroundImage = 'url("img/pendu-0.png")';
+
+    // reset visibility
     for(let item of letterBtn){
         item.style.visibility = "visible";
     }
-
+    // hide start btn
     startBtn.parentElement.style.display = 'none';
 
-    let count = 0;
-    if(wordNbr < wordArray.length){    // from first to last word
-        let theWord = wordArray[wordNbr];
-        console.log(theWord)
-        // create div with this word
-        hollowWord(theWord);
-        // listen letters
-        for (let l = 0 ; l < letterBtn.length ; l++){
-            letterBtn[l].addEventListener('click', function (event) {
-                event.preventDefault();
-                // get the letter
-                let ltr = letterBtn[l].innerHTML;
+    count = w = 0;  // good & wrong letter
+}
 
-                letterBtn[l].style.visibility = 'hidden';
-
-                // search letter in word (as array)
-                if(theWord.includes(ltr)){
-                    for(let c = 0 ; c < theWord.length ; c++){
-                        if( ltr === theWord[c]){
-                            ltrWord[c].innerHTML = ltr;
-                            ltrWord[c].style.border = 'none';
-                            count++;
-                            console.log("mot = " + theWord.length + " count = " + count);
-                        }
-                    }
-
-                    if(count === theWord.length){
-                        chance.innerHTML = "Gagné !!!"
-                        wordNbr++;
-                        // continue
-                    }
-                }
-                else {
-                    let wrongLtr = document.createElement('div');
-                    wrongLtr.innerHTML = ltr;
-                    wrongLetter.appendChild(wrongLtr);
-                    w++;
-                    if(w < 10){
-                        frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                        chance.innerHTML = (parseInt(chance.innerHTML) - 1) + " chances";
-                    }
-                    else{
-                        frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                        chance.innerHTML = "Vous avez perdu";
-                        startBtn.parentElement.style.display = "flex";
-                    }
-                }
-            })
-        }
-    }
-    else {
-        chance.innerHTML = "Félicitation, vous avez trouvé tous les mots !";
-    }
-})
-
-
-// create function
 function shakeArray (){
     for(let i = 0 ; i < wordArray.length ; i++){
         let item = wordArray[i];
@@ -119,10 +139,4 @@ function hollowWord (theWord){
         let box = document.createElement('div');
         word.appendChild(box);
     }
-}
-
-function inGame (wordNbr){     // if start button or next word param word's number
-    // afficher les lettres
-    // afficher le mot suivant
-    // remettre w = 0
 }
