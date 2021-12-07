@@ -31,7 +31,7 @@ si ( wordNbr < au nbr total && count < taille du mot && w < 10 chances) :
             count++ * nombre de places
         - elle s'inscrit dans wrong
             w++
-    sinon si (wordBrn === nbr total) :
+    sinon si (wordNbr === nbr total) :
 
         TOUS LES MOTS SONT TROUVES
     
