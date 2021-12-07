@@ -13,46 +13,50 @@ let wordArray = [
     "DEVELOPPEUR",
     "LANGAGE",
 ];
-// get button
+// get start button
 let startBtn = document.querySelector('#startBtn');
+
 // get letter
 let letterBtn = document.getElementsByClassName('letter');
 let word = document.getElementById('word');
 let ltrWord = document.getElementById("word").getElementsByTagName("div");
 let wrongLetter = document.getElementById('wrongLetter');
+
 // get hangman
 let frame = document.querySelector('#hangMan');
-let w = 0;
-frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-let count = 0;
+frame.style.backgroundImage = 'url("img/pendu-10.png")';
 
+// get display chance
+let chance = document.getElementById('display').querySelector('span');
+
+let w = 0;
 // beginning
 startBtn.addEventListener('click', function (event){
     event.preventDefault();
-    let game = 0;
 
     frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+
+    // restart
+    let game = 0;
     for(let item of letterBtn){
         item.style.visibility = "visible";
     }
-
-    startBtn.innerHTML = "Restart";
-    // shake array
+    // start
+    startBtn.parentElement.style.display = 'none';
+    // shake words
     shakeArray();
 
-    if(game < wordArray.length){
+    if(game < wordArray.length){    // from first to the end of word
         let theWord = wordArray[game];
         console.log(theWord)
         // create div with this word
         hollowWord(theWord);
-        // get letter
+        // listen letters
         for (let l = 0 ; l < letterBtn.length ; l++){
             letterBtn[l].addEventListener('click', function (event) {
                 event.preventDefault();
-                // get letter
+                // get the letter
                 let ltr = letterBtn[l].innerHTML;
-
-                console.log(ltr);
 
                 letterBtn[l].style.visibility = 'hidden';
 
@@ -69,15 +73,16 @@ startBtn.addEventListener('click', function (event){
                     let wrongLtr = document.createElement('div');
                     wrongLtr.innerHTML = ltr;
                     wrongLetter.appendChild(wrongLtr);
-                    // todo display count-- chance
                     w++;
-                    frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                    if(w === 10){
+                    if(w < 10){
                         frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                        // todo PERDU : display player loose
+                        chance.innerHTML = (parseInt(chance.innerHTML) - 1) + " chances";
                     }
-
-                    console.log("w " + w);
+                    else{
+                        frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                        chance.innerHTML = "Vous avez perdu";
+                        startBtn.parentElement.style.display = "flex";
+                    }
                 }
             })
         }
