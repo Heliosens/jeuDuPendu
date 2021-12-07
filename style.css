@@ -19,7 +19,8 @@ main {
     padding: 1rem;
 }
 
-section, #side, #side div, #sideBtn, #game, #display, #word, #usedLetter, #btn {
+section, #side, #side div, #sideBtn, #game,
+#display, #word, #usedLetter, #usedLetter div, #btn {
     display: flex;
 }
 
@@ -89,8 +90,12 @@ a {
     flex-direction: column;
 }
 
-#usedLetter div {
-    flex-basis: 70%;
+#usedLetter > div {
+    flex-basis: 33%;
+}
+
+#wrongLetter {
+
 }
 
 #btn {
@@ -130,7 +135,7 @@ a {
 }
 
 #btn span {
-    visibility: hidden;
+    /*visibility: hidden;*/
     flex-basis: 33%;
 }
 

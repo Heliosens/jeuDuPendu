@@ -31,6 +31,7 @@ let wordArray = [
 
 // get start button
 let startBtn = document.getElementsByClassName('startBtn');
+let goOne = document.getElementById('goOne');
 
 // get next word button
 let nextWord = document.getElementById('nextWord');
@@ -58,93 +59,63 @@ let win = 0; // word found
 for(let btn of startBtn){
     btn.addEventListener('click', function (event) {
         event.preventDefault();
-        // 0 for reset
-        startGame(0);
+        shakeArray();
 
-        let theWord = wordArray[wordNbr];
-        console.log(theWord)
+        // from first to last word
+        if(wordNbr < wordArray.length){
+            startGame();
+            // the word
+            let theWord = wordArray[wordNbr];
+            console.log(theWord)
 
-        // from first to last word, si pas gané, si pas perdu
-        if(wordNbr < wordArray.length && count < theWord.length && w < 10){
             // create div with this word
             hollowWord(theWord);
+
             // listen letters and test letter
             for (let l = 0 ; l < letterBtn.length ; l++){
                 letterBtn[l].addEventListener('click', function (event) {
                     event.preventDefault();
                     // test the letter
                     let ltr = letterBtn[l].innerHTML;
-
                     letterBtn[l].style.visibility = 'hidden';
+                    // test if letter is in the word and where
+                    testLetter(ltr, theWord);
 
-                    // search letter in word (as array)
-                    if(theWord.includes(ltr) && count < theWord.length){
-                        for(let c = 0 ; c < theWord.length ; c++){
-                            if( ltr === theWord[c]){
-                                ltrWord[c].innerHTML = ltr;
-                                ltrWord[c].style.border = 'none';
-                                count++;
-                                console.log(count);
-                            }
-                        }
-                        if(count === theWord.length){
-                            wordNbr++;
-                            win++;
-                            info[0].style.visibility = "hidden";
-                            info[1].innerHTML = "Vous avez trouvé " + win + " mots"
-                            // continue
-                            startBtn[1].style.display = "none";
-                            startBtn[2].style.display = "block";
-                        }
-                    }
-                    else {
-                        let wrongLtr = document.createElement('div');
-                        wrongLtr.innerHTML = ltr;
-                        wrongLetter.appendChild(wrongLtr);
-                        w++;
-                        if(w < 10){
-                            frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                            info[0].innerHTML = (parseInt(info[0].innerHTML) - 1) + " chances";
-                        }
-                        else{
-                            frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
-                            info[0].innerHTML = "Vous avez perdu";
-                            startBtn.parentElement.style.display = "flex";
-                        }
+                    if(count === theWord.length) {
+                        win++;
+                        console.log("win " + win);
+                        info[0].style.visibility = "hidden";
+                        info[1].innerHTML = "Vous avez trouvé " + win + " mots"
+                        // continue
+                        startBtn[1].style.display = "none";
+                        goOne.style.display = "block";
                     }
                 })
             }
+            // cont.
+            goOne.addEventListener('click', function (event){
+                event.preventDefault();
+                wordNbr++;
+                console.log(wordNbr);
+                count = 0;  // good letter
+                w = 0; // wrong choice
+            })
         }
         else if(wordNbr === wordArray.length){
-            info[2].innerHTML = "Félicitation, vous avez trouvé " + win + " sur " + wordArray.length;
-        }
-        else {
-            console.log(count === theWord.length ? "mot trouvé" : "perdu");
-            // display continue or restart btn
+            info[1].innerHTML = "Félicitation, vous avez trouvé " + win + " sur " + wordArray.length;
         }
     })
 }
 
 
 // function
-function startGame(param){
-    // restart or continue
-    if(param === 0){
-        // shake words
-        shakeArray();
-        wordNbr = 0;
-    }
-    else{
-        // next word
-        wordNbr++;
-    }
-
+function startGame(){
     // no hang man
     frame.style.backgroundImage = 'url("img/pendu-0.png")';
-
+    w = 0;
     // reset chance
     info[0].innerHTML = "10 chances";
-    info[0].style.visibility = "hidden";
+
     // reset visibility
     for(let item of letterBtn){
         item.style.visibility = "visible";
@@ -157,7 +128,6 @@ function startGame(param){
 
     // reset good & wrong letter & word found
     count = 0;
-    w = 0;
     win = 0;
 }
 
@@ -176,4 +146,32 @@ function hollowWord (theWord){
         let box = document.createElement('div');
         word.appendChild(box);
     }
+}
+
+function testLetter(letter, word){
+        // search letter in word (as array) && count < theWord.length
+        if(word.includes(letter)){
+            for(let c = 0 ; c < word.length ; c++){
+                if( letter === word[c]){
+                    ltrWord[c].innerHTML = letter;
+                    ltrWord[c].style.border = 'none';
+                    count++;
+                    console.log(count);
+                }
+            }
+        }
+        else {
+            let wrongLtr = document.createElement('div');
+            wrongLtr.innerHTML = letter;
+            wrongLetter.appendChild(wrongLtr);
+            w++;
+            if(w < 10){
+                frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                info[0].innerHTML = (parseInt(info[0].innerHTML) - 1) + " chances";
+            }
+            else{
+                frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                startBtn.parentElement.style.display = "flex";
+            }
+        }
 }

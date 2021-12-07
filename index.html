@@ -51,18 +51,28 @@
                     <div id="hangMan"></div>
                     <div id="word"></div>
                     <div id="btn">
-                        <span>10 chances</span>
+                        <span>10 chances</span> <!-- info 0 -->
                         <div>
                             <a class="startBtn" href="">Restart</a>
                             <a id="goOne" href="">Continuer</a>
                         </div>
-                        <span>Vous avez trouvé ...  mots</span>
+                        <span>Vous avez trouvé ...  mots sur ...</span> <!-- info 1 -->
                     </div>
                 </div>
 
                 <div id="usedLetter">
-                    <p>Lettres utilisées</p>
-                    <div id="wrongLetter"></div>
+                    <div>
+                        <p>Lettres utilisées</p>
+                        <div id="wrongLetter"></div>
+                    </div>
+                    <div>
+                        <p>mot(s) non trouvés</p>
+                        <div id="noFound"></div>
+                    </div>
+                    <div>
+                        <p>mot(s) trouvés</p>
+                        <div id="foundWord"></div>
+                    </div>
                 </div>
             </div>
 
