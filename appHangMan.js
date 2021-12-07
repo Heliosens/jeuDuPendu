@@ -13,20 +13,29 @@ let wordArray = [
     "DEVELOPPEUR",
     "LANGAGE",
 ];
-
+// get button
 let startBtn = document.querySelector('#startBtn');
+// get letter
 let letterBtn = document.getElementsByClassName('letter');
 let word = document.getElementById('word');
 let ltrWord = document.getElementById("word").getElementsByTagName("div");
 let wrongLetter = document.getElementById('wrongLetter');
-
-
+// get hangman
+let frame = document.querySelector('#hangMan');
+let w = 0;
+frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
 let count = 0;
 
 // beginning
 startBtn.addEventListener('click', function (event){
     event.preventDefault();
     let game = 0;
+
+    frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+    for(let item of letterBtn){
+        item.style.visibility = "visible";
+    }
+
     startBtn.innerHTML = "Restart";
     // shake array
     shakeArray();
@@ -36,33 +45,45 @@ startBtn.addEventListener('click', function (event){
         console.log(theWord)
         // create div with this word
         hollowWord(theWord);
-    }
+        // get letter
+        for (let l = 0 ; l < letterBtn.length ; l++){
+            letterBtn[l].addEventListener('click', function (event) {
+                event.preventDefault();
+                // get letter
+                let ltr = letterBtn[l].innerHTML;
 
+                console.log(ltr);
+
+                letterBtn[l].style.visibility = 'hidden';
+
+                // search letter in word (as array)
+                if(theWord.includes(ltr)){
+                    for(let c = 0 ; c < theWord.length ; c++){
+                        if( ltr === theWord[c]){
+                            ltrWord[c].innerHTML = ltr;
+                            ltrWord[c].style.border = 'none';
+                        }
+                    }
+                }
+                else {
+                    let wrongLtr = document.createElement('div');
+                    wrongLtr.innerHTML = ltr;
+                    wrongLetter.appendChild(wrongLtr);
+                    // todo display count-- chance
+                    w++;
+                    frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                    if(w === 10){
+                        frame.style.backgroundImage = 'url("img/pendu-' + w + '.png")';
+                        // todo PERDU : display player loose
+                    }
+
+                    console.log("w " + w);
+                }
+            })
+        }
+    }
 })
 
-
-//         // recup word
-//         let theWord = wordArray[game];
-//
-//         // recup letter
-//         let ltr = this.innerHTML;
-//
-//         // search in word (as array)
-//         if(theWord.includes(ltr)){
-//             for(let c = 0 ; c < theWord.length ; c++){
-//                 if( ltr === theWord[c]){
-//                     ltrWord[c].innerHTML = ltr;
-//                 }
-//             }
-//         }
-//         else {
-//             let wrongLtr = document.createElement('div');
-//             wrongLtr.innerHTML = ltr;
-//             wrongLetter.appendChild(wrongLtr);
-//         }
-//
-//     })
-// }
 
 // create function
 function shakeArray (){
@@ -82,12 +103,3 @@ function hollowWord (theWord){
     }
 }
 
-function getLetter () {
-    for (let l = 0 ; l < letterBtn.length ; l++){
-        letterBtn[l].addEventListener('click', function (event) {
-            event.preventDefault();
-            letterBtn[l].className = "used";
-            return letterBtn[l];
-        })
-    }
-}

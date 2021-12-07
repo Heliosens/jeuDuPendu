@@ -72,9 +72,12 @@ a {
     align-items: center;
 }
 
+#word {
+    align-items: baseline;
+}
+
 #word div {
     width: 3vw;
-    height: 5vh;
     margin: .5rem;
     font-size: 3vw;
     border-bottom: black 3px solid;
@@ -84,7 +87,6 @@ a {
     position: relative;
     width: 45%;
     background-color: teal;
-    background-image: url("img/pendu-10.png");
     background-size: contain;
     background-repeat: no-repeat;
     padding-bottom: 45%;
@@ -112,3 +114,6 @@ a {
     width: 25%;
 }
 
+#letter a{
+    visibility: hidden;
+}
