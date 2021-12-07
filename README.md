@@ -9,9 +9,9 @@ Affichage :
 
 calcul :
 
-    w -> nombre de mauvais choix = 0
     wordNbr -> nombre de mot trouvé = 0
     count -> nombre de bonne lettres = 0
+    w -> nombre de mauvais choix = 0
 
 au click = function start (0 or 1) :
 

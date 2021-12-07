@@ -15,7 +15,7 @@ let wordArray = [
 ];
 
 // get start button
-let startBtn = document.querySelector('#startBtn');
+let startBtn = document.getElementsByClassName('startBtn');
 
 // get next word button
 let nextWord = document.getElementById('nextWord');
@@ -34,20 +34,24 @@ frame.style.backgroundImage = 'url("img/pendu-10.png")';
 let chance = document.getElementById('display').querySelector('span');
 
 // state beginning
-let w = 0; // wrong choice
-let wordNbr = 0; // found words
+let wordNbr = 0; // word's index
 let count = 0;  // good letter
+let w = 0; // wrong choice
+let win = 0; // word found
 
-// beginning
-startBtn.addEventListener('click', function (event) {
-    event.preventDefault();
-    // 0 for start
-    startGame(0);
-})
+// start or restart
+for(let btn of startBtn){
+    btn.addEventListener('click', function (event) {
+        event.preventDefault();
+        // 0 for reset, 1 for continue
+        startGame(0);
+    })
+}
 
-if(wordNbr < wordArray.length){    // from first to last word
-    let theWord = wordArray[wordNbr];
-    console.log(theWord)
+let theWord = wordArray[wordNbr];
+console.log(theWord)
+// from first to last word, si pas gané, si pas perdu
+if(wordNbr < wordArray.length && count < theWord.length && w < 10){
     // create div with this word
     hollowWord(theWord);
     // listen letters
@@ -95,13 +99,14 @@ if(wordNbr < wordArray.length){    // from first to last word
     }
 }
 else {
-    chance.innerHTML = "Félicitation, vous avez trouvé tous les mots !";
+    chance.innerHTML = "Félicitation, vous avez trouvé " + win + " sur " + wordArray.length;
 }
 
 
 
 // function
 function startGame(param){
+    // restart or continue
     if(param === 0){
         // shake words
         shakeArray();
@@ -118,9 +123,11 @@ function startGame(param){
     for(let item of letterBtn){
         item.style.visibility = "visible";
     }
-    // hide start btn
-    startBtn.parentElement.style.display = 'none';
 
+    // hide start btn
+    startBtn[0].parentElement.style.display = 'none';
+    // reset wrong
+    wrongLetter.innerHTML = "";
     count = w = 0;  // good & wrong letter
 }
 
