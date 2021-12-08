@@ -90,12 +90,8 @@ a {
     flex-direction: column;
 }
 
-#usedLetter > div {
-    flex-basis: 33%;
-}
-
-#wrongLetter {
-
+#usedLetter div {
+    flex-direction: column;
 }
 
 #btn {
@@ -112,7 +108,11 @@ a {
     align-items: baseline;
 }
 
-.startBtn, #goOne {
+#btn .startBtn {
+    visibility: hidden;
+}
+
+#startBtn {
     background-color: teal;
     color: white;
     border-radius: 15px;
@@ -128,10 +128,6 @@ a {
     justify-content: center;
     align-items: center;
     background-color: #ffffff99;
-}
-
-#goOne {
-    display: none;
 }
 
 #btn span {
