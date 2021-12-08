@@ -1,4 +1,4 @@
-// array of word
+// array of words
 let arrayOfWord = [
     "VOYAGE",
     "YOGA",
@@ -33,6 +33,7 @@ let arrayOfWord = [
     "ORCHIDEE",
     "KIWI",
     "WAGON",
+    "SPECTACLE",
 ];
 
 // get elements
@@ -41,13 +42,14 @@ const sideFrame = document.getElementById('sideFrame');
 // get letters
 const alphaB = document.getElementById('letter').getElementsByTagName('a');
 
-// get target image
+// get hangman place
 const hangImg = document.getElementById('hangMan');
-hangImg.style.backgroundImage = "url('img/pendu-10.png')";
+hangImg.style.backgroundImage = "url('img/hang-10.png')";
 
 // get target word
 const wordPlace = document.getElementById('word');
 const letterPlace = wordPlace.getElementsByTagName('div');
+
 // get start button
 const start = document.getElementById('startBtn');
 const restart = document.getElementById('restart');
@@ -62,7 +64,7 @@ const wrongLetter = document.getElementById('wrongLetter');
 let win = 0;
 // start
 start.addEventListener('click', function (event){
-    hangImg.style.backgroundImage = "url('img/pendu-0.png')";
+    hangImg.style.backgroundImage = "url('img/hang-0.png')";
 
     // get random word
     const word = arrayOfWord[Math.floor( Math.random() * arrayOfWord.length)];
@@ -74,6 +76,8 @@ start.addEventListener('click', function (event){
 
     // allowed letters access
     sideFrame.style.display = "none";
+
+    // switch button start -> restart
     start.style.display = "none";
     restart.style.display = "unset";
 
@@ -91,27 +95,26 @@ start.addEventListener('click', function (event){
             if(word.includes(ltr)){                                 // if the letter is in the word
                 for(let char = 0 ; char < word.length ; char++){
                     if(word[char] === ltr){                         // find each index
-                        letterPlace[char].innerHTML = ltr;
+                        letterPlace[char].innerHTML = ltr;          // write letter in place
                         letterPlace[char].style.border = 'none';
                         win++;
-                        if(win === word.length){
+                        if(win === word.length){                    // if word is complete
                             info[0].innerHTML = "Gagné !!!";
                             sideFrame.style.display = "unset";
-
                         }
                     }
                 }
             }
-            else {
+            else {                                                  // else create element
                 let wrongLtr = document.createElement('div');
-                wrongLtr.innerHTML = ltr;
+                wrongLtr.innerHTML = ltr;                           // write ltr in element
                 wrongLetter.appendChild(wrongLtr);
                 let w = wrongLetter.getElementsByTagName('div').length;
-                hangImg.style.backgroundImage = "url('img/pendu-" + w + ".png')";
+                hangImg.style.backgroundImage = "url('img/hang-" + w + ".png')";    // adapt hangman img
                 if(w === 10){
-                    info[0].innerHTML = "Perdu !!!";
+                    info[0].innerHTML = "Perdu !!!";                // 10 wrong letter = loose
                     sideFrame.style.display = "unset";
-                    info[1].innerHTML = "Le mot était " + word.toLowerCase();
+                    info[1].innerHTML = "Le mot était : " + word.toLowerCase();
                 }
             }
         })

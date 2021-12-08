@@ -19,14 +19,14 @@ main {
     padding: 1rem;
 }
 
-section, #side, #side div, #sideFrame, #game,
-#display, #word, #usedLetter, #usedLetter div, #btn {
+section, #side, #side div, #sideFrame, #letter, #game,
+#display, #word, #usedLetter, #wrongLetter, #btn {
     display: flex;
 }
 
 #side {
     position: relative;
-    flex-basis: 15%;
+    flex-basis: 20%;
     flex-direction: column;
     border: 1px black solid;
 }
@@ -37,7 +37,6 @@ p {
 
 #letter {
     width: 100%;
-    display: flex;
     flex-wrap: wrap;
 }
 
@@ -58,12 +57,13 @@ a {
     color: black;
 }
 
-#game, #display {
-    flex-basis: 85%;
+#game {
+    width: 100%;
 }
 
 #display {
-    height: 90vh;
+    flex-basis: 90%;
+    height: 80%;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -86,12 +86,14 @@ a {
 }
 
 #usedLetter {
-    flex-basis: 20%;
+    flex-basis: 10%;
     flex-direction: column;
+    height: 70vh;
 }
 
-#usedLetter div {
+#wrongLetter {
     flex-direction: column;
+    flex-wrap: wrap;
 }
 
 #btn {
@@ -122,7 +124,31 @@ a {
 }
 
 #btn span {
-    /*visibility: hidden;*/
     flex-basis: 33%;
+}
+
+@media screen and (max-width: 1100px) {
+    section {
+        flex-direction: column-reverse;
+        font-size: 3vh;
+    }
+
+    #letter a {
+        width: 3.2%;
+        font-size: 3vw;
+    }
+
+}
+
+@media screen and (max-width: 850px) {
+    section {
+        flex-direction: column-reverse;
+        font-size: 4vw;
+    }
+
+    #letter a {
+        width: 5%;
+        font-size: 5vw;
+    }
 }
 
